@@ -10,8 +10,11 @@ fi
 LOG_FILE=${parent_path}'/update-cloudflare-dns.log'
 
 ### Write last run of STDOUT & STDERR as log file and prints to screen
-exec > >(tee $LOG_FILE) 2>&1
-echo "==> $(date "+%Y-%m-%d %H:%M:%S")"
+# exec > >(tee $LOG_FILE) 2>&1
+# echo "==> $(date "+%Y-%m-%d %H:%M:%S")"
+## remove all *log how's not the date of today or yesterday and create a new one or append to the existing one
+find ${parent_path} -name '*.log' -mtime +1 -exec rm {} \;
+echo "==> $(date "+%Y-%m-%d %H:%M:%S")" > $LOG_FILE
 
 ### Validate if config-file exists
 
